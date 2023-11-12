@@ -7,6 +7,8 @@ environment:
   sdk: ">=3.1.5 <4.0.0"
 
 dependencies:
+  cupertino_icons: ^1.0.6
+  flame: ^1.10.1
   flutter:
     sdk: flutter
   flutter_riverpod: ^2.4.5
@@ -23,3 +25,14 @@ dev_dependencies:
 
 flutter:
   uses-material-design: true
+  assets:
+    - assets/images/ball_one.png
+    - assets/images/player_block_one.png
+  fonts:
+    - family: Saira
+      fonts:
+        - asset: assets/fonts/Saira/Saira-Regular.ttf
+        - asset: assets/fonts/Saira/Saira-Italic.ttf
+          style: italic
+        - asset: assets/fonts/Saira/Saira-Bold.ttf
+          weight: 700
