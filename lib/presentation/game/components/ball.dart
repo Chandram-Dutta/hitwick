@@ -3,18 +3,17 @@ import 'dart:ui';
 
 import 'package:flame/collisions.dart';
 import 'package:flame/components.dart';
-import 'package:hitwick/presentation/game/hit.dart';
+import 'package:hitwick/constants.dart';
+import 'package:hitwick/presentation/game/components/hit.dart';
 import 'package:hitwick/presentation/game/hitwick_game.dart';
 
 class Ball extends CircleComponent
     with HasGameRef<HitwickGame>, CollisionCallbacks {
-  final Vector2 canvaseSize;
   late Vector2 direction;
   double speed = 200.0;
 
-  Ball({
-    required this.canvaseSize,
-  }) : super(
+  Ball()
+      : super(
           radius: 18,
           position: Vector2.zero(),
           paint: Paint()..color = const Color(0xFFFFFFFF),
@@ -24,7 +23,7 @@ class Ball extends CircleComponent
   Future<void> onLoad() async {
     super.onLoad();
 
-    position = Vector2(canvaseSize.x / 2, canvaseSize.y / 2);
+    position = Vector2(game.size.x / 2, game.size.y / 2);
 
     final random = Random();
     double angle;
@@ -48,21 +47,16 @@ class Ball extends CircleComponent
     if (other is Hit) {
       speed += 5;
 
-      // Calculate the deviation based on where the ball hit
       double hitPosition = (position.x - other.position.x) / other.width;
-      hitPosition =
-          hitPosition.clamp(-1, 1); // Ensure the value is between -1 and 1
+      hitPosition = hitPosition.clamp(-1, 1);
 
-      // Calculate the new direction
       double deviation;
       if (other.player == Player.playerA) {
-        deviation = -0.6 * pi * hitPosition; // Reflect PlayerB's hit
-        direction =
-            Vector2(-sin(deviation), cos(deviation)); // Downwards for PlayerA
+        deviation = -0.6 * pi * hitPosition;
+        direction = Vector2(-sin(deviation), cos(deviation));
       } else {
-        deviation = 0.6 * pi * hitPosition; // Normal behavior for PlayerB
-        direction =
-            Vector2(sin(deviation), -cos(deviation)); // Upwards for PlayerB
+        deviation = 0.6 * pi * hitPosition;
+        direction = Vector2(sin(deviation), -cos(deviation));
       }
     }
     super.onCollision(intersectionPoints, other);
@@ -74,11 +68,17 @@ class Ball extends CircleComponent
 
     position += direction * speed * dt;
 
-    if (position.x <= 0 || position.x >= canvaseSize.x - 32) {
+    if (position.x <= 0 || position.x >= game.size.x - 32) {
       direction = Vector2(-direction.x, direction.y);
     }
-    if (position.y <= 0 || position.y >= canvaseSize.y - 32) {
+    if (position.y <= 0 || position.y >= game.size.y - 32) {
       direction = Vector2(direction.x, -direction.y);
+    }
+
+    if (position.y <= 0) {
+      game.playerBScore++;
+    } else if (position.y >= game.size.y - 32) {
+      game.playerAScore++;
     }
   }
 }

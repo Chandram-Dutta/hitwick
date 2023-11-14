@@ -4,24 +4,25 @@ import 'dart:ui';
 import 'package:flame/collisions.dart';
 import 'package:flame/components.dart';
 import 'package:flutter/services.dart';
+import 'package:hitwick/constants.dart';
+import 'package:hitwick/presentation/game/hitwick_game.dart';
 
-class Hit extends RectangleComponent with KeyboardHandler {
+class Hit extends RectangleComponent
+    with KeyboardHandler, HasGameRef<HitwickGame> {
   Hit({
-    required this.canvasSize,
     required this.player,
   }) : super(
-          position: player == Player.playerA
-              ? Vector2((canvasSize.x - 48) / 2, 16)
-              : Vector2((canvasSize.x - 48) / 2, canvasSize.y - 32),
           size: Vector2(64, 16),
           paint: Paint()..color = const Color(0xFFFFFFFF),
         );
 
-  final Vector2 canvasSize;
   final Player player;
 
   @override
   FutureOr<void> onLoad() {
+    position = player == Player.playerA
+        ? Vector2((game.size.x - 48) / 2, 16)
+        : Vector2((game.size.x - 48) / 2, game.size.y - 32);
     add(RectangleHitbox.relative(Vector2(1, 1), parentSize: size));
     return super.onLoad();
   }
@@ -37,17 +38,17 @@ class Hit extends RectangleComponent with KeyboardHandler {
         position.x -= 10;
       }
       if (keysPressed.contains(LogicalKeyboardKey.keyS) &&
-          position.y < canvasSize.y / 2 - 100) {
+          position.y < game.size.y / 2 - 100) {
         position.y += 10;
       }
       if (keysPressed.contains(LogicalKeyboardKey.keyD) &&
-          position.x < canvasSize.x - 64) {
+          position.x < game.size.x - 64) {
         position.x += 10;
       }
     }
     if (isKeyDown && player == Player.playerB) {
       if (keysPressed.contains(LogicalKeyboardKey.arrowUp) &&
-          position.y > canvasSize.y / 2 + 100) {
+          position.y > game.size.y / 2 + 100) {
         position.y -= 10;
       }
       if (keysPressed.contains(LogicalKeyboardKey.arrowLeft) &&
@@ -55,16 +56,14 @@ class Hit extends RectangleComponent with KeyboardHandler {
         position.x -= 10;
       }
       if (keysPressed.contains(LogicalKeyboardKey.arrowDown) &&
-          position.y < canvasSize.y - 16) {
+          position.y < game.size.y - 16) {
         position.y += 10;
       }
       if (keysPressed.contains(LogicalKeyboardKey.arrowRight) &&
-          position.x < canvasSize.x - 64) {
+          position.x < game.size.x - 64) {
         position.x += 10;
       }
     }
     return super.onKeyEvent(event, keysPressed);
   }
 }
-
-enum Player { playerA, playerB }

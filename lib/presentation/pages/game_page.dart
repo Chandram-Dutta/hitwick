@@ -1,7 +1,8 @@
 import 'package:flame/game.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:hitwick/presentation/game/hitwick_game.dart';
+import 'package:hitwick/presentation/game/overlay/end_menu.dart';
+import 'package:hitwick/presentation/game/overlay/main_menu.dart';
 
 class GamePage extends StatelessWidget {
   const GamePage({super.key});
@@ -11,88 +12,18 @@ class GamePage extends StatelessWidget {
     return WillPopScope(
       onWillPop: () async => false,
       child: Scaffold(
-        body: Container(
-          decoration: const BoxDecoration(
-            color: Colors.white,
-            borderRadius: BorderRadius.all(
-              Radius.circular(18),
+        backgroundColor: Colors.white,
+        body: Padding(
+          padding: const EdgeInsets.all(18.0),
+          child: ClipRRect(
+            borderRadius: BorderRadius.circular(12),
+            child: GameWidget<HitwickGame>.controlled(
+              overlayBuilderMap: {
+                'MainMenu': (_, game) => MainMenu(game: game),
+                'EndMenu': (_, game) => EndMenu(game: game),
+              },
+              gameFactory: HitwickGame.new,
             ),
-          ),
-          child: Column(
-            children: [
-              const Text(
-                "Player One",
-                style: TextStyle(
-                  color: Colors.black,
-                ),
-              ),
-              Expanded(
-                child: Row(
-                  children: [
-                    const Expanded(
-                      child: Padding(
-                        padding: EdgeInsets.only(left: 18.0),
-                        child: ClipRRect(
-                          borderRadius: BorderRadius.all(
-                            Radius.circular(18),
-                          ),
-                          child: GameWidget<HitwickGame>.controlled(
-                            gameFactory: HitwickGame.new,
-                          ),
-                        ),
-                      ),
-                    ),
-                    Padding(
-                      padding: const EdgeInsets.symmetric(vertical: 18.0),
-                      child: Column(
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                        children: [
-                          IconButton(
-                            icon: const Icon(
-                              CupertinoIcons.pause_circle,
-                              color: Colors.black,
-                            ),
-                            onPressed: () {},
-                          ),
-                          const Card(
-                            color: Colors.black,
-                            child: Padding(
-                              padding: EdgeInsets.symmetric(
-                                vertical: 8.0,
-                                horizontal: 18.0,
-                              ),
-                              child: Column(
-                                children: [
-                                  Text("1"),
-                                  Divider(
-                                    thickness: 2,
-                                    color: Colors.white,
-                                  ),
-                                  Text("1"),
-                                ],
-                              ),
-                            ),
-                          ),
-                          IconButton(
-                            icon: const Icon(
-                              CupertinoIcons.pause_circle,
-                              color: Colors.black,
-                            ),
-                            onPressed: () {},
-                          )
-                        ],
-                      ),
-                    )
-                  ],
-                ),
-              ),
-              const Text(
-                "Player Two",
-                style: TextStyle(
-                  color: Colors.black,
-                ),
-              ),
-            ],
           ),
         ),
       ),
