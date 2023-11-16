@@ -11,6 +11,7 @@ dependencies:
   flame: ^1.10.1
   flutter:
     sdk: flutter
+  flutter_native_splash: ^2.3.5
   flutter_riverpod: ^2.4.5
   riverpod_annotation: ^2.3.0
 
@@ -22,12 +23,16 @@ dev_dependencies:
   riverpod_generator: ^2.3.5
   custom_lint: ^0.5.6
   riverpod_lint: ^2.3.3
+  flutter_launcher_icons: ^0.13.1
 
 flutter:
   uses-material-design: true
   assets:
     - assets/images/ball_one.png
     - assets/images/player_block_one.png
+    - assets/images/pause.png
+    - assets/images/logo.png
+    - assets/images/appicon.png
   fonts:
     - family: Saira
       fonts:
@@ -36,3 +41,29 @@ flutter:
           style: italic
         - asset: assets/fonts/Saira/Saira-Bold.ttf
           weight: 700
+
+flutter_native_splash:
+  color: "#000000"
+  image: assets/images/logo4x.png
+
+  android_12:
+    image: assets/images/android12icon.png
+    icon_background_color: "#000000"
+
+flutter_launcher_icons:
+  android: "launcher_icon"
+  ios: true
+  image_path: "assets/images/appicon.png"
+  min_sdk_android: 21 # android min sdk min:16, default 21
+  web:
+    generate: true
+    image_path: "assets/images/appicon.png"
+    background_color: "#000000"
+    theme_color: "#000000"
+  windows:
+    generate: true
+    image_path: "assets/images/appicon.png"
+    icon_size: 48 # min:48, max:256, default: 48
+  macos:
+    generate: true
+    image_path: "assets/images/appicon.png"

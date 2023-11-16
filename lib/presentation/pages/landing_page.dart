@@ -40,9 +40,18 @@ class LandingPage extends StatelessWidget {
                       ),
                     ],
                   ),
-                  Text(
-                    "HitWick",
-                    style: Theme.of(context).textTheme.displayMedium,
+                  Column(
+                    children: [
+                      Image.asset(
+                        "assets/images/appicon.png",
+                        height: 200,
+                        width: 200,
+                      ),
+                      Text(
+                        "HitWick",
+                        style: Theme.of(context).textTheme.displayMedium,
+                      ),
+                    ],
                   ),
                   Padding(
                     padding: const EdgeInsets.only(bottom: 18.0),

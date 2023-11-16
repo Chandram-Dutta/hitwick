@@ -19,17 +19,17 @@ class MainMenu extends StatelessWidget {
       color: Colors.black,
       fontWeight: FontWeight.bold,
     );
-    const headingTextStyle = TextStyle(
-      fontFamily: 'Saira',
-      fontSize: 18,
-      color: Colors.black,
-      fontWeight: FontWeight.bold,
-    );
-    const bodyTextStyle = TextStyle(
-      fontFamily: 'Saira',
-      fontSize: 18,
-      color: Colors.black,
-    );
+    // const headingTextStyle = TextStyle(
+    //   fontFamily: 'Saira',
+    //   fontSize: 18,
+    //   color: Colors.black,
+    //   fontWeight: FontWeight.bold,
+    // );
+    // const bodyTextStyle = TextStyle(
+    //   fontFamily: 'Saira',
+    //   fontSize: 18,
+    //   color: Colors.black,
+    // );
     return Material(
       color: Colors.black12,
       child: Center(
